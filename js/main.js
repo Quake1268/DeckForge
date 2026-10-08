@@ -124,10 +124,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 7. Waitlist form submission via FormSubmit
   const waitlistForm = document.getElementById('waitlist-form');
-  const waitlistSuccess = document.getElementById('waitlist-success');
   const waitlistConsent = document.getElementById('waitlist-consent');
 
   if (waitlistForm) {
+    // Dynamic origin adjustment for FormSubmit _next redirect
+    const nextInput = waitlistForm.querySelector('input[name="_next"]');
+    if (nextInput && window.location.origin && window.location.origin !== 'null' && window.location.protocol.startsWith('http')) {
+      nextInput.value = `${window.location.origin}/thanks.html`;
+    }
+
     waitlistForm.addEventListener('submit', (e) => {
       if (!waitlistForm.checkValidity()) {
         waitlistForm.reportValidity();
@@ -152,7 +157,19 @@ document.addEventListener('DOMContentLoaded', () => {
           submitBtn.textContent = 'Joining...';
         }
 
-        fetch('https://formsubmit.co/ajax/deckforge@teletsia.xyz', {
+        // If testing locally (file:// protocol), simulate immediate submission and open thanks.html
+        if (window.location.protocol === 'file:') {
+          setTimeout(() => {
+            window.location.href = 'thanks.html';
+          }, 350);
+          return;
+        }
+
+        const endpoint = waitlistForm.getAttribute('action') || 'https://formsubmit.co/deckforge@teletsia.xyz';
+        const ajaxEndpoint = endpoint.replace('formsubmit.co/', 'formsubmit.co/ajax/');
+        const redirectUrl = (nextInput && nextInput.value) ? nextInput.value : 'https://deckforge.teletsia.xyz/thanks.html';
+
+        fetch(ajaxEndpoint, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -163,7 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
             _subject: 'New DeckForge Waitlist Submission',
             _captcha: 'false',
             _template: 'table',
-            _next: 'https://deckforge.teletsia.xyz/thanks.html'
+            _next: redirectUrl
           })
         })
           .then((res) => res.json())
@@ -178,16 +195,26 @@ document.addEventListener('DOMContentLoaded', () => {
               if (data.message && data.message.includes('Activation')) {
                 alert('FormSubmit: Activation link sent to deckforge@teletsia.xyz for this domain. Please confirm it in your inbox.');
               } else {
-                HTMLFormElement.prototype.submit.call(waitlistForm);
+                window.location.href = 'thanks.html';
               }
             }
           })
           .catch(() => {
-            HTMLFormElement.prototype.submit.call(waitlistForm);
+            window.location.href = 'thanks.html';
           });
       }
     });
   }
+
+  // 8. Progressive Email Link Hydration (Bot Protection)
+  document.querySelectorAll('.mail-link').forEach((link) => {
+    const user = link.getAttribute('data-user');
+    const domain = link.getAttribute('data-domain');
+    if (user && domain) {
+      link.setAttribute('href', `mailto:${user}@${domain}`);
+      link.textContent = `${user}@${domain}`;
+    }
+  });
 
   // Initial check on load
   onScroll();
