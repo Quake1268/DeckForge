@@ -352,9 +352,12 @@
           <span class="overline">Early Access</span>
           <h2 class="section-title">Join the Waitlist</h2>
           <p class="section-subtitle">Be among the first to generate personalized Anki vocabulary decks when DeckForge opens early access.</p>
-          <form class="waitlist-form" id="waitlist-form" novalidate>
+          <form class="waitlist-form" id="waitlist-form" action="https://formsubmit.co/deckforge@teletsia.xyz" method="POST" novalidate>
+            <input type="hidden" name="_subject" value="New DeckForge Waitlist Submission">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_template" value="table">
             <div class="waitlist-input-wrapper">
-              <input type="email" class="waitlist-input" id="waitlist-email" placeholder="Enter your email address" required autocomplete="email">
+              <input type="email" name="email" class="waitlist-input" id="waitlist-email" placeholder="Enter your email address" required autocomplete="email">
               <button type="submit" class="btn btn-primary waitlist-submit-btn">Join Waitlist</button>
             </div>
             <p class="waitlist-note">No spam. Only early access invites and product updates.</p>

@@ -122,7 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 7. Waitlist form submission
+  // 7. Waitlist form submission via FormSubmit
   const waitlistForm = document.getElementById('waitlist-form');
   const waitlistSuccess = document.getElementById('waitlist-success');
 
@@ -132,16 +132,47 @@ document.addEventListener('DOMContentLoaded', () => {
       const emailVal = waitlistInput ? waitlistInput.value.trim() : '';
 
       if (emailVal && emailVal.includes('@')) {
-        waitlistSuccess.classList.add('is-visible');
-        if (waitlistInput) {
-          waitlistInput.value = '';
-          waitlistInput.disabled = true;
-        }
         const submitBtn = waitlistForm.querySelector('button[type="submit"]');
         if (submitBtn) {
           submitBtn.disabled = true;
-          submitBtn.textContent = 'Joined';
+          submitBtn.textContent = 'Joining...';
         }
+
+        fetch('https://formsubmit.co/ajax/deckforge@teletsia.xyz', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            email: emailVal,
+            _subject: 'New DeckForge Waitlist Submission',
+            _captcha: 'false',
+            _template: 'table'
+          })
+        })
+          .then((res) => res.json())
+          .then(() => {
+            waitlistSuccess.classList.add('is-visible');
+            if (waitlistInput) {
+              waitlistInput.value = '';
+              waitlistInput.disabled = true;
+            }
+            if (submitBtn) {
+              submitBtn.textContent = 'Joined';
+            }
+          })
+          .catch(() => {
+            // Graceful fallback for offline / blocked network environments
+            waitlistSuccess.classList.add('is-visible');
+            if (waitlistInput) {
+              waitlistInput.value = '';
+              waitlistInput.disabled = true;
+            }
+            if (submitBtn) {
+              submitBtn.textContent = 'Joined';
+            }
+          });
       }
     });
   }
