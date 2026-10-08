@@ -3,6 +3,19 @@
  * Lightweight vanilla script for navigation, scroll interactions, and animations.
  */
 
+// 0. Clean URLs: Immediately strip .html extensions from address bar on live server
+if (typeof window !== 'undefined' && window.location.protocol.startsWith('http')) {
+  const pathname = window.location.pathname;
+  if (pathname.endsWith('.html')) {
+    let clean = pathname.slice(0, -5);
+    if (clean.endsWith('/index')) {
+      clean = clean.slice(0, -5);
+    }
+    if (!clean) clean = '/';
+    window.history.replaceState(null, '', clean + window.location.search + window.location.hash);
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   // 1. Smooth Scroll for Nav Links
   const internalLinks = document.querySelectorAll('a[href^="#"]');
@@ -96,28 +109,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }, { passive: true });
 
-  // 6. Start Now button interaction (alert + scroll to waitlist)
-  const startBtn = document.getElementById('start-now-btn');
-  const devAlert = document.getElementById('dev-alert');
+  // 6. Hero CTA interaction (smooth scroll to waitlist + focus input)
+  const heroCtaBtn = document.getElementById('hero-cta-btn') || document.getElementById('start-now-btn');
   const waitlistSection = document.getElementById('waitlist');
   const waitlistInput = document.getElementById('waitlist-email');
-  let alertTimeout;
 
-  if (startBtn && devAlert) {
-    startBtn.addEventListener('click', (e) => {
+  if (heroCtaBtn) {
+    heroCtaBtn.addEventListener('click', (e) => {
       e.preventDefault();
-      devAlert.classList.add('is-visible');
-
-      clearTimeout(alertTimeout);
-      alertTimeout = setTimeout(() => {
-        devAlert.classList.remove('is-visible');
-      }, 4000);
-
       if (waitlistSection) {
         waitlistSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
         setTimeout(() => {
           if (waitlistInput) waitlistInput.focus();
-        }, 600);
+        }, 500);
       }
     });
   }
@@ -130,7 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Dynamic origin adjustment for FormSubmit _next redirect
     const nextInput = waitlistForm.querySelector('input[name="_next"]');
     if (nextInput && window.location.origin && window.location.origin !== 'null' && window.location.protocol.startsWith('http')) {
-      nextInput.value = `${window.location.origin}/thanks.html`;
+      nextInput.value = `${window.location.origin}/thanks`;
     }
 
     waitlistForm.addEventListener('submit', (e) => {
@@ -167,7 +171,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const endpoint = waitlistForm.getAttribute('action') || 'https://formsubmit.co/deckforge@teletsia.xyz';
         const ajaxEndpoint = endpoint.replace('formsubmit.co/', 'formsubmit.co/ajax/');
-        const redirectUrl = (nextInput && nextInput.value) ? nextInput.value : 'https://deckforge.teletsia.xyz/thanks.html';
+        const redirectUrl = (nextInput && nextInput.value) ? nextInput.value : 'https://deckforge.teletsia.xyz/thanks';
+        const thanksTarget = (window.location.protocol === 'file:') ? 'thanks.html' : '/thanks';
 
         fetch(ajaxEndpoint, {
           method: 'POST',
@@ -186,7 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
           .then((res) => res.json())
           .then((data) => {
             if (data.success === 'true' || data.success === true) {
-              window.location.href = 'thanks.html';
+              window.location.href = thanksTarget;
             } else {
               if (submitBtn) {
                 submitBtn.disabled = false;
@@ -195,26 +200,32 @@ document.addEventListener('DOMContentLoaded', () => {
               if (data.message && data.message.includes('Activation')) {
                 alert('FormSubmit: Activation link sent to deckforge@teletsia.xyz for this domain. Please confirm it in your inbox.');
               } else {
-                window.location.href = 'thanks.html';
+                window.location.href = thanksTarget;
               }
             }
           })
           .catch(() => {
-            window.location.href = 'thanks.html';
+            window.location.href = thanksTarget;
           });
       }
     });
   }
 
-  // 8. Progressive Email Link Hydration (Bot Protection)
-  document.querySelectorAll('.mail-link').forEach((link) => {
-    const user = link.getAttribute('data-user');
-    const domain = link.getAttribute('data-domain');
-    if (user && domain) {
-      link.setAttribute('href', `mailto:${user}@${domain}`);
-      link.textContent = `${user}@${domain}`;
-    }
-  });
+  // 8. Progressive Local Link Resolver (ensures root links navigate locally on file:// protocol)
+  if (window.location.protocol === 'file:') {
+    document.querySelectorAll('a[href]').forEach((link) => {
+      const href = link.getAttribute('href');
+      if (href === '/') {
+        link.setAttribute('href', 'index.html');
+      } else if (href && href.startsWith('/') && !href.startsWith('//')) {
+        let target = href.slice(1);
+        if (!target.includes('.') && !target.includes('#')) {
+          target += '.html';
+        }
+        link.setAttribute('href', target);
+      }
+    });
+  }
 
   // Initial check on load
   onScroll();

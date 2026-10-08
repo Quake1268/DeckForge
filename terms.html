@@ -7,7 +7,7 @@
   <meta name="description" content="DeckForge Terms of Service. Review the conditions governing our early access platform and upcoming releases.">
   <meta property="og:title" content="Terms of Service | DeckForge">
   <meta property="og:description" content="DeckForge Terms of Service. Review the conditions governing our early access platform and upcoming releases.">
-  <meta property="og:url" content="https://deckforge.teletsia.xyz/terms.html">
+  <meta property="og:url" content="https://deckforge.teletsia.xyz/terms">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Terms of Service | DeckForge">
@@ -16,13 +16,24 @@
   <link rel="icon" type="image/png" href="assets/favicon.png">
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
   <link rel="stylesheet" href="css/style.css">
+  <script>
+    if (typeof window !== 'undefined' && window.location.protocol.startsWith('http')) {
+      const p = window.location.pathname;
+      if (p.endsWith('.html')) {
+        let c = p.slice(0, -5);
+        if (c.endsWith('/index')) c = c.slice(0, -5);
+        if (!c) c = '/';
+        window.history.replaceState(null, '', c + window.location.search + window.location.hash);
+      }
+    }
+  </script>
 </head>
 <body>
   <nav class="navbar">
     <div class="container">
-      <a href="index.html" class="logo">Deck<span class="logo-accent">Forge</span></a>
+      <a href="/" class="logo">Deck<span class="logo-accent">Forge</span></a>
       <div class="nav-actions">
-        <a href="index.html" class="btn btn-secondary nav-back-btn">← Back to DeckForge</a>
+        <a href="/" class="btn btn-secondary nav-back-btn">← Back to DeckForge</a>
       </div>
     </div>
   </nav>
@@ -46,11 +57,11 @@
 
         <section class="legal-section">
           <h2>3. Intellectual Property and Contact</h2>
-          <p>All design assets, code, brand marks, and site content remain the exclusive intellectual property of Teletsia. For legal questions or partnerships, please contact us at <a href="mailto:&#100;&#101;&#99;&#107;&#102;&#111;&#114;&#103;&#101;&#64;&#116;&#101;&#108;&#101;&#116;&#115;&#105;&#97;&#46;&#120;&#121;&#122;" class="text-accent mail-link" data-user="deckforge" data-domain="teletsia.xyz">deckforge@teletsia.xyz</a>.</p>
+          <p>All design assets, code, brand marks, and site content remain the exclusive intellectual property of Teletsia. For legal questions or partnerships, please contact us at <a href="mailto:&#100;&#101;&#99;&#107;&#102;&#111;&#114;&#103;&#101;&#64;&#116;&#101;&#108;&#101;&#116;&#115;&#105;&#97;&#46;&#120;&#121;&#122;" class="text-accent mail-link">&#100;&#101;&#99;&#107;&#102;&#111;&#114;&#103;&#101;&#64;&#116;&#101;&#108;&#101;&#116;&#115;&#105;&#97;&#46;&#120;&#121;&#122;</a>.</p>
         </section>
         
         <div class="legal-back">
-          <a href="index.html" class="btn btn-secondary">← Back to DeckForge</a>
+          <a href="/" class="btn btn-secondary">← Back to DeckForge</a>
         </div>
       </div>
     </div>
@@ -59,14 +70,14 @@
   <footer class="footer">
     <div class="container">
       <div class="footer-top">
-        <a href="index.html" class="logo">Deck<span class="logo-accent">Forge</span></a>
+        <a href="/" class="logo">Deck<span class="logo-accent">Forge</span></a>
         <p class="footer-tagline">Built for serious language learners.</p>
         <div class="footer-links">
-          <a href="mailto:&#100;&#101;&#99;&#107;&#102;&#111;&#114;&#103;&#101;&#64;&#116;&#101;&#108;&#101;&#116;&#115;&#105;&#97;&#46;&#120;&#121;&#122;" class="footer-link mail-link" data-user="deckforge" data-domain="teletsia.xyz">deckforge@teletsia.xyz</a>
+          <a href="mailto:&#100;&#101;&#99;&#107;&#102;&#111;&#114;&#103;&#101;&#64;&#116;&#101;&#108;&#101;&#116;&#115;&#105;&#97;&#46;&#120;&#121;&#122;" class="footer-link mail-link">&#100;&#101;&#99;&#107;&#102;&#111;&#114;&#103;&#101;&#64;&#116;&#101;&#108;&#101;&#116;&#115;&#105;&#97;&#46;&#120;&#121;&#122;</a>
           <span class="footer-sep">·</span>
-          <a href="privacy.html" class="footer-link">Privacy Policy</a>
+          <a href="/privacy" class="footer-link">Privacy Policy</a>
           <span class="footer-sep">·</span>
-          <a href="terms.html" class="footer-link">Terms of Service</a>
+          <a href="/terms" class="footer-link">Terms of Service</a>
         </div>
       </div>
       <div class="footer-bottom">
