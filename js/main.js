@@ -152,24 +152,35 @@ document.addEventListener('DOMContentLoaded', () => {
           })
         })
           .then((res) => res.json())
-          .then(() => {
-            waitlistSuccess.classList.add('is-visible');
-            if (waitlistInput) {
-              waitlistInput.value = '';
-              waitlistInput.disabled = true;
-            }
-            if (submitBtn) {
-              submitBtn.textContent = 'Joined';
+          .then((data) => {
+            if (data.success === 'true' || data.success === true) {
+              waitlistSuccess.classList.add('is-visible');
+              if (waitlistInput) {
+                waitlistInput.value = '';
+                waitlistInput.disabled = true;
+              }
+              if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Joined';
+              }
+            } else {
+              if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Join Waitlist';
+              }
+              if (data.message && data.message.includes('Activation')) {
+                alert('FormSubmit: Activation link sent to deckforge@teletsia.xyz for this domain. Please confirm it in your inbox.');
+              }
             }
           })
           .catch(() => {
-            // Graceful fallback for offline / blocked network environments
             waitlistSuccess.classList.add('is-visible');
             if (waitlistInput) {
               waitlistInput.value = '';
               waitlistInput.disabled = true;
             }
             if (submitBtn) {
+              submitBtn.disabled = true;
               submitBtn.textContent = 'Joined';
             }
           });
