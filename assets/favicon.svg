@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <!-- Pitch-Black Brutalist Base Tile -->
+  <rect width="32" height="32" rx="7" fill="#0A0A0A"/>
+  <rect x="0.5" y="0.5" width="31" height="31" rx="6.5" fill="none" stroke="#262626" stroke-width="1"/>
+  
+  <!-- Back Card (Layer 1: offset top-right) -->
+  <rect x="8" y="6" width="20.5" height="13.5" rx="2.5" fill="#181818" stroke="#484848" stroke-width="0.9"/>
+  
+  <!-- Front Card (Layer 2: main flashcard) -->
+  <rect x="3.5" y="11.5" width="20.5" height="13.5" rx="2.5" fill="#101010" stroke="#2A2A2A" stroke-width="0.9"/>
+  
+  <!-- Cyan Top Accent on Front Card -->
+  <path d="M3.5 14C3.5 12.62 4.62 11.5 6 11.5H21.5C22.88 11.5 24 12.62 24 14V14.5H3.5V14Z" fill="#00E5FF"/>
+  
+  <!-- Front Card Content -->
+  <!-- Word line (white) -->
+  <rect x="9" y="16.5" width="9.5" height="1.6" rx="0.8" fill="#FFFFFF"/>
+  <!-- Synonym / POS tag (cyan) -->
+  <rect x="11.2" y="19.3" width="5.1" height="1.1" rx="0.55" fill="#00E5FF"/>
+  <!-- Cue line (dim gray) -->
+  <rect x="10.2" y="21.3" width="7.1" height="0.8" rx="0.4" fill="#666666"/>
+</svg>
