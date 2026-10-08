@@ -203,6 +203,19 @@ nav.navbar > .container {
   color: var(--accent);
 }
 
+.nav-actions {
+  display: flex;
+  align-items: center;
+}
+
+.nav-back-btn {
+  padding: 8px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 6px;
+  text-decoration: none;
+}
+
 .hamburger {
   display: none;
   flex-direction: column;
@@ -1206,4 +1219,268 @@ nav.navbar.scrolled {
   margin-top: 48px;
   padding-top: 32px;
   border-top: 1px solid var(--border-subtle);
+}
+
+
+/* ==========================================================================
+   Technical Deep-Dive / LLM Contextual Pipeline
+   ========================================================================== */
+.tech-deepdive {
+  margin-top: 50px;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 14px;
+  padding: 40px;
+}
+
+.tech-deepdive-header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.tech-badge {
+  display: inline-block;
+  align-self: flex-start;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background-color: var(--accent-dim);
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.tech-deepdive-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.tech-deepdive-desc {
+  font-size: 15px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  max-width: 900px;
+}
+
+.tech-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.tech-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.metric-num {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--accent);
+  letter-spacing: -0.02em;
+}
+
+.metric-label {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .tech-deepdive {
+    padding: 28px 20px;
+  }
+  .tech-metrics {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+/* ==========================================================================
+   Founder's Note / Mission Section
+   ========================================================================== */
+.founder-section {
+  padding: 80px 0 100px;
+}
+
+.founder-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 56px 48px;
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.founder-header {
+  margin-bottom: 24px;
+}
+
+.founder-body {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.founder-body p {
+  font-size: 16px;
+  color: var(--text-secondary);
+  line-height: 1.75;
+}
+
+.founder-signoff {
+  margin-top: 16px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.founder-team {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.founder-sub {
+  font-size: 13px;
+  color: var(--accent);
+}
+
+@media (max-width: 768px) {
+  .founder-card {
+    padding: 36px 24px;
+  }
+}
+
+/* ==========================================================================
+   Waitlist Consent Checkbox
+   ========================================================================== */
+.waitlist-consent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 12.5px;
+  color: var(--text-muted);
+  cursor: pointer;
+  user-select: none;
+}
+
+.waitlist-consent input[type="checkbox"] {
+  accent-color: var(--accent);
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+}
+
+.waitlist-consent a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* ==========================================================================
+   Thanks Confirmation Page
+   ========================================================================== */
+.thanks-page {
+  padding: 140px 0 100px;
+  min-height: calc(100vh - 220px);
+  display: flex;
+  align-items: center;
+}
+
+.thanks-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--accent);
+  border-radius: 16px;
+  padding: 60px 48px;
+  max-width: 680px;
+  margin: 0 auto;
+  text-align: center;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+}
+
+.thanks-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: var(--accent-dim);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+}
+
+.thanks-icon svg {
+  width: 28px;
+  height: 28px;
+}
+
+.thanks-card .section-subtitle {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 32px;
+}
+
+.thanks-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: left;
+  margin: 28px 0 36px;
+  padding: 24px;
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.thanks-step {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.thanks-step-num {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--accent);
+  line-height: 1;
+  padding-top: 2px;
+}
+
+.thanks-step-text strong {
+  display: block;
+  font-size: 14px;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+
+.thanks-step-text p {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.thanks-action {
+  margin-top: 24px;
+}
+
+@media (max-width: 600px) {
+  .thanks-card {
+    padding: 40px 24px;
+  }
 }

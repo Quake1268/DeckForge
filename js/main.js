@@ -125,10 +125,24 @@ document.addEventListener('DOMContentLoaded', () => {
   // 7. Waitlist form submission via FormSubmit
   const waitlistForm = document.getElementById('waitlist-form');
   const waitlistSuccess = document.getElementById('waitlist-success');
+  const waitlistConsent = document.getElementById('waitlist-consent');
 
-  if (waitlistForm && waitlistSuccess) {
+  if (waitlistForm) {
     waitlistForm.addEventListener('submit', (e) => {
+      if (!waitlistForm.checkValidity()) {
+        waitlistForm.reportValidity();
+        e.preventDefault();
+        return;
+      }
+
       e.preventDefault();
+
+      if (waitlistConsent && !waitlistConsent.checked) {
+        alert('Please agree to the Privacy Policy to join the waitlist.');
+        waitlistConsent.focus();
+        return;
+      }
+
       const emailVal = waitlistInput ? waitlistInput.value.trim() : '';
 
       if (emailVal && emailVal.includes('@')) {
@@ -148,21 +162,14 @@ document.addEventListener('DOMContentLoaded', () => {
             email: emailVal,
             _subject: 'New DeckForge Waitlist Submission',
             _captcha: 'false',
-            _template: 'table'
+            _template: 'table',
+            _next: 'https://deckforge.teletsia.xyz/thanks.html'
           })
         })
           .then((res) => res.json())
           .then((data) => {
             if (data.success === 'true' || data.success === true) {
-              waitlistSuccess.classList.add('is-visible');
-              if (waitlistInput) {
-                waitlistInput.value = '';
-                waitlistInput.disabled = true;
-              }
-              if (submitBtn) {
-                submitBtn.disabled = true;
-                submitBtn.textContent = 'Joined';
-              }
+              window.location.href = 'thanks.html';
             } else {
               if (submitBtn) {
                 submitBtn.disabled = false;
@@ -170,19 +177,13 @@ document.addEventListener('DOMContentLoaded', () => {
               }
               if (data.message && data.message.includes('Activation')) {
                 alert('FormSubmit: Activation link sent to deckforge@teletsia.xyz for this domain. Please confirm it in your inbox.');
+              } else {
+                HTMLFormElement.prototype.submit.call(waitlistForm);
               }
             }
           })
           .catch(() => {
-            waitlistSuccess.classList.add('is-visible');
-            if (waitlistInput) {
-              waitlistInput.value = '';
-              waitlistInput.disabled = true;
-            }
-            if (submitBtn) {
-              submitBtn.disabled = true;
-              submitBtn.textContent = 'Joined';
-            }
+            HTMLFormElement.prototype.submit.call(waitlistForm);
           });
       }
     });
